@@ -1,0 +1,23 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Account.master.cs" Inherits="Shopping_Cart.Masterpages.Account" %>
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <ajaxToolkit:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server"></ajaxToolkit:ToolkitScriptManager>
+        <ShoppingCart:LoginHeadBar runat="server" id="LoginHeadBar" />
+        <asp:TreeView ID="AccountNavigation" runat="server" ForeColor="Black" CollapseImageUrl="~/App_Themes/Default/Images/Triangle.jpg" ExpandImageUrl="~/App_Themes/Default/Images/Triangle.jpg"></asp:TreeView>
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">      
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

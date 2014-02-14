@@ -1,0 +1,6 @@
+﻿Hi <% UserName %>,
+Thank you for signing up for a new account at ShoppingCart
+To log in to the site, use the following details:
+User name: <% UserName %>
+Your password: <% Password %>
+Thank you.

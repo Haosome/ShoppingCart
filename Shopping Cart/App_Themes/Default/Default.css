@@ -1,0 +1,65 @@
+﻿body {
+    background-color: #edeaea;
+}
+
+#HeadBar {
+    background-color: black;
+    width: 100%;
+    color: #fcf8f8;
+}
+
+.LinkButton {
+    color: #d3c7c7;
+    text-decoration: none;
+}
+
+nav {
+    width: 100%;
+    background: #fcf8f8;
+}
+
+#CategoryMenu {
+    padding: 0px;
+    width: 100%;
+}
+
+ul.level1 {
+    font-weight: bold;
+}
+
+#CategoryMenu ul li {
+    width: 200px;
+    padding-left: 20px;
+}
+
+a.level2 {
+    background-color: #fcf8f8;
+}
+
+    a.level2:hover {
+        background: #ffd800;
+    }
+
+.Thumbnail {
+    Width: 24%;
+}
+
+#AccountNavigation {
+    float: left;
+}
+
+.Login {
+    float: left;
+    background-color: #ffffff;
+    width: 30%;
+    margin: 5%;
+    margin-right: 5px;
+}
+
+.CreateUserWizard {
+    margin: 5%;
+    margin-left: 5px;
+    width: 30%;
+    float: left;
+    background-color: #ffffff;
+}
