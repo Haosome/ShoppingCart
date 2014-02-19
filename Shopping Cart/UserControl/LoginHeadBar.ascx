@@ -28,7 +28,7 @@
                     <td>
                         <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Home.aspx" CssClass="LinkButton">Home</asp:HyperLink>
                     </td>
-                    <td>&nbsp;</td>
+                    <td><asp:HyperLink ID="MyCart" runat="server" CssClass="LinkButton" NavigateUrl="~/Cart.aspx">MyCart</asp:HyperLink></td>
                     <td class="auto-style4">
                         <asp:HyperLink ID="MyAccount" runat="server" NavigateUrl="~/Account/BuyOrders.aspx" CssClass="LinkButton">My Account</asp:HyperLink>
                     </td>
@@ -49,7 +49,7 @@
                         <asp:LoginStatus ID="LoginStatus1" runat="server" LogoutText="Change User" LogoutAction="RedirectToLoginPage" CssClass="LinkButton" ForeColor="White" />
                     </td>
                     <td><asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Home.aspx" CssClass="LinkButton">Home</asp:HyperLink></td>
-                    <td>&nbsp;</td>
+                    <td><asp:HyperLink ID="MyCart" runat="server" CssClass="LinkButton" NavigateUrl="~/Cart.aspx">MyCart</asp:HyperLink></td>
                     <td class="auto-style4">
                         <asp:HyperLink ID="MyAccount" runat="server" NavigateUrl="~/Account/BuyOrders.aspx" CssClass="LinkButton">My Account</asp:HyperLink>
                     </td>

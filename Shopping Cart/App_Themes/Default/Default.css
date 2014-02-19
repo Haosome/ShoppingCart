@@ -52,7 +52,7 @@ a.level2 {
     float: left;
     background-color: #ffffff;
     width: 30%;
-    margin: 5%;
+    margin: 5%;h
     margin-right: 5px;
 }
 
@@ -62,4 +62,7 @@ a.level2 {
     width: 30%;
     float: left;
     background-color: #ffffff;
+}
+.ErrorMessage {
+    color:red;
 }

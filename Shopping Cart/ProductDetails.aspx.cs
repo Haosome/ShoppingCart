@@ -41,8 +41,25 @@ namespace Shopping_Cart
             }
             else
             {
-                Response.Redirect("~/Login.aspx");
+                Response.Redirect("~/Login.aspx?ReturnUrl=~/ProductDetails.aspx?ProductID="+Request.QueryString[0]);
             }
+        }
+
+        protected void AddToCart_Click(object sender, EventArgs e)
+        {
+            string key = Guid.NewGuid().ToString();
+            HttpCookie cookie;
+            if (Request.Cookies["CartItems"] != null)
+            {
+               cookie = Request.Cookies["CartItems"];
+            }
+            else
+            {
+               cookie = new HttpCookie("CartItems");
+            }
+            cookie[key] = Request.QueryString[0];
+            cookie.Expires = DateTime.Now.AddMonths(1);
+            Response.Cookies.Add(cookie);
         }
     }
 }

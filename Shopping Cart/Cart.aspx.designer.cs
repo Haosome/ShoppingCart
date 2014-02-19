@@ -10,33 +10,33 @@
 namespace Shopping_Cart {
     
     
-    public partial class ProductDetails {
+    public partial class Cart {
         
         /// <summary>
-        /// UpdatePanel1 control.
+        /// ListView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.WebControls.ListView ListView1;
         
         /// <summary>
-        /// DetailsView1 control.
+        /// Checkout control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DetailsView DetailsView1;
+        protected global::System.Web.UI.WebControls.Button Checkout;
         
         /// <summary>
-        /// EntityDataSource1 control.
+        /// NoItem control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.EntityDataSource EntityDataSource1;
+        protected global::System.Web.UI.WebControls.Label NoItem;
     }
 }

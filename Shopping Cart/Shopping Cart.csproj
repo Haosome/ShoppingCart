@@ -120,6 +120,7 @@
     <Content Include="bin\Shopping Cart.pdb" />
     <Content Include="bin\System.Web.Providers.dll" />
     <Content Include="bin\System.Web.Providers.xml" />
+    <Content Include="Cart.aspx" />
     <Content Include="CategoryContent.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Home.aspx" />
@@ -155,6 +156,7 @@
     <Content Include="ProductsImages\truckfire.png" />
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />
+    <Content Include="text.aspx" />
     <Content Include="UserControl\LoginHeadBar.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -216,6 +218,13 @@
     </Compile>
     <Compile Include="Account\SellOrders.aspx.designer.cs">
       <DependentUpon>SellOrders.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cart.aspx.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cart.aspx.designer.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
     </Compile>
     <Compile Include="CategoryContent.aspx.cs">
       <DependentUpon>CategoryContent.aspx</DependentUpon>
@@ -284,6 +293,13 @@
     <Compile Include="Model\ProductContext.cs" />
     <Compile Include="Model\ProductDatabaseInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="text.aspx.cs">
+      <DependentUpon>text.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="text.aspx.designer.cs">
+      <DependentUpon>text.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\LoginHeadBar.ascx.cs">
       <DependentUpon>LoginHeadBar.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

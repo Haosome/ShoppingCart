@@ -8,7 +8,7 @@
         <EmptyDataTemplate>
             <table runat="server" style="">
                 <tr>
-                    <td>No data was returned.</td>
+                    <td>You do not have any purchases to display in this view.</td>
                 </tr>
             </table>
         </EmptyDataTemplate>

@@ -16,7 +16,7 @@
                 <EmptyDataTemplate>
                     <table id="Table1" runat="server" style="">
                         <tr>
-                            <td>No data was returned.</td>
+                            <td>You have no selling items in this view.</td>
                         </tr>
                     </table>
                 </EmptyDataTemplate>
