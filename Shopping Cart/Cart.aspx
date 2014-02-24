@@ -45,6 +45,8 @@
             </table>
         </LayoutTemplate>
     </asp:ListView>
+    <asp:Label ID="Total" runat="server"></asp:Label>
+    <br/>
     <asp:Button ID="Checkout" runat="server" Text="Check Out" OnClick="Checkout_Click" Visible="false"/>
     <asp:Label ID="NoItem" runat="server" Text="There are no items in your cart" Visible="true"></asp:Label>
 </asp:Content>

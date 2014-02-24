@@ -30,6 +30,8 @@ namespace Shopping_Cart
         {
             if (Request.Cookies["CartItems"] != null && Request.Cookies["CartItems"].Values != null)
             {
+                double total = 0;
+
                 Checkout.Visible = true;
                 NoItem.Visible = false;
                 List<Product> CartItems = new List<Product>();
@@ -43,15 +45,18 @@ namespace Shopping_Cart
                         var product = from p in entities.Products
                                       where p.ProductID == ProductID
                                       select new { p.ProductName, p.Price, p.ImagePath };
+                        total += product.First().Price;
                         CartItems.Add(new Product(product.First().ProductName, product.First().Price, product.First().ImagePath, Request.Cookies["CartItems"].Values.Keys[i]));
                     }
                 }
                 ListView1.DataSource = CartItems;
                 ListView1.DataBind();
+                Total.Text = "Your total is: " + total.ToString();
             }
             else
             {
                 Checkout.Visible = false;
+                Total.Visible = false;
                 NoItem.Visible = true;
             }
 
