@@ -16,9 +16,10 @@ namespace Shopping_Cart.Account
         {
             if (!IsPostBack)
             {
-                EntityDataSource1.WhereParameters.Add("UserID", DbType.Guid, Membership.GetUser().ProviderUserKey.ToString());
-                EntityDataSource1.Where = "it.UserID = @UserID&&it.Shipped = false";
+                EntityDataSource1.WhereParameters.Add("UserID", DbType.Guid, System.Web.Security.Membership.GetUser().ProviderUserKey.ToString());
+                
             }
+            EntityDataSource1.Where = "it.UserID = @UserID&&it.Shipped = false";
         }
     }
 }

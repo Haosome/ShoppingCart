@@ -17,7 +17,7 @@ namespace Shopping_Cart.Account
             if (!IsPostBack)
             {
                 ViewState["PeriodMode"] = false;
-                EntityDataSource1.WhereParameters.Add("SellerID", DbType.Guid, Membership.GetUser().ProviderUserKey.ToString());
+                EntityDataSource1.WhereParameters.Add("SellerID", DbType.Guid, System.Web.Security.Membership.GetUser().ProviderUserKey.ToString());
                 EntityDataSource1.WhereParameters.Add("Now", DbType.Date, DateTime.Now.ToString());
                 EntityDataSource1.WhereParameters.Add("To", DbType.Date, DateTime.Now.Subtract(new TimeSpan(7, 0, 0, 0)).ToString());
                 EntityDataSource1.Where = "it.Product.SellerID = @SellerID && it.Shipped = true && it.CreatedTime BETWEEN @To AND @Now";
@@ -33,7 +33,7 @@ namespace Shopping_Cart.Account
                 {
                     int Days = Convert.ToInt16(DropDownList1.SelectedValue);
                     EntityDataSource1.WhereParameters.Clear();
-                    EntityDataSource1.WhereParameters.Add("UserID", DbType.Guid, Membership.GetUser().ProviderUserKey.ToString());
+                    EntityDataSource1.WhereParameters.Add("UserID", DbType.Guid, System.Web.Security.Membership.GetUser().ProviderUserKey.ToString());
                     EntityDataSource1.WhereParameters.Add("Now", DbType.Date, DateTime.Now.ToString());
                     EntityDataSource1.WhereParameters.Add("To", DbType.Date, DateTime.Now.Subtract(new TimeSpan(Days, 0, 0, 0)).ToString());
                     EntityDataSource1.Where = "it.UserID=@UserID&&it.Shipped=true&&it.CreatedTime BETWEEN @To AND @Now  ";
@@ -44,7 +44,7 @@ namespace Shopping_Cart.Account
                     EntityDataSource1.WhereParameters.Clear();
                     EntityDataSource1.WhereParameters.Add("From", DbType.Date, new DateTime(year, 1, 1).ToString());
                     EntityDataSource1.WhereParameters.Add("To", DbType.Date, new DateTime(year, 12, 31).ToString());
-                    EntityDataSource1.WhereParameters.Add("UserID", DbType.Guid, Membership.GetUser().ProviderUserKey.ToString());
+                    EntityDataSource1.WhereParameters.Add("UserID", DbType.Guid, System.Web.Security.Membership.GetUser().ProviderUserKey.ToString());
                     EntityDataSource1.Where = "it.UserID=@UserID&&it.Shipped=true&&it.CreatedTime BETWEEN @From AND @To";
                 }
             }

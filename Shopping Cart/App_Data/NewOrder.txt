@@ -1,0 +1,5 @@
+﻿Hi,
+<% BuyerName %> has bought your following product:
+<% ProductName %>
+Shipping address: <% ShippingAddress %>
+Thank you.

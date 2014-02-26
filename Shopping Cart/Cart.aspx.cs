@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Shopping_Cart.Model;
 using System.Web.Security;
+using System.IO;
+using System.Net.Mail;
 
 namespace Shopping_Cart
 {
@@ -88,7 +90,7 @@ namespace Shopping_Cart
             {
                 using (ShoppingCartEntities entities = new ShoppingCartEntities())
                 {
-                    string UserId = Membership.GetUser().ProviderUserKey.ToString();
+                    string UserId = System.Web.Security.Membership.GetUser().ProviderUserKey.ToString();
                     var Address = from profile in entities.MyProfiles
                                   where profile.UserID == new Guid(UserId)
                                   select new { profile.ShippingAddress, profile.ShippingPhoneNumber, profile.ShippingPostalCode };
@@ -101,9 +103,29 @@ namespace Shopping_Cart
 
                         for (int i = 0; i < Request.Cookies["CartItems"].Values.Count; i++)
                         {
-                            Order o = new Order() { OrderID = Guid.NewGuid(), ProductID = Convert.ToInt32(Request.Cookies["CartItems"].Values[i]), UserID = new Guid(UserId), CreatedTime = DateTime.Now };
+                            int productID = Convert.ToInt32(Request.Cookies["CartItems"].Values[i]);
+
+                            Order o = new Order() { OrderID = Guid.NewGuid(), ProductID = productID, UserID = new Guid(UserId), CreatedTime = DateTime.Now };
                             entities.AddToOrders(o);
                             entities.SaveChanges();
+
+                            var ProductnEMail = entities.Memberships.
+                           Join(entities.Products, m => m.UserId, p => p.SellerID, (m, p) => new { Email = m.Email, PID = p.ProductID, ProductName = p.ProductName }).Where(x => x.PID == productID).
+                           Select(x => new { x.Email, x.ProductName });
+                            string FileName = Server.MapPath("~/App_Data/NewOrder.txt");
+                            var UserName = entities.Users.Where(u => u.UserId == new Guid(UserId)).Select(u => u.UserName);
+                            string MailBody = File.ReadAllText(FileName);
+                            string ShippingAddress = Address.First().ShippingAddress + Address.First().ShippingPostalCode + Address.First().ShippingPhoneNumber;
+                            MailBody = MailBody.Replace("<% BuyerName %>", UserName.First());
+                            MailBody = MailBody.Replace("<% ProductName %>", ProductnEMail.First().ProductName);
+                            MailBody = MailBody.Replace("<% ShippingAddress %>", ShippingAddress);
+                            MailMessage newMessage = new MailMessage();
+                            newMessage.Body = MailBody;
+                            newMessage.Subject = "New Order";
+                            newMessage.To.Add(new MailAddress(ProductnEMail.First().Email));
+                            newMessage.From = new MailAddress("shoppingcarthaosome@gmail.com", "ShoppingCart");
+                            SmtpClient client = new SmtpClient();
+                            client.Send(newMessage);
                         }
                         Response.Cookies["CartItems"].Expires = DateTime.Now.AddDays(-1d);
                         Response.Redirect(Request.RawUrl);

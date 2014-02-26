@@ -25,7 +25,7 @@ namespace Shopping_Cart.Account
             ImageUpload.SaveAs(System.IO.Path.Combine(PhycialFolder,FileName+FileExtension));
 
             e.Values.Add("ImagePath", VirtualFolder + FileName + FileExtension);
-            e.Values.Add("SellerID", Membership.GetUser().ProviderUserKey.ToString());
+            e.Values.Add("SellerID", System.Web.Security.Membership.GetUser().ProviderUserKey.ToString());
             e.Values.Add("CategoryID", DropDownList1.SelectedValue);
         }
     }

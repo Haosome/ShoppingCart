@@ -7,6 +7,7 @@
     <Schema Namespace="ShoppingCartModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="ShoppingCartModelStoreContainer">
           <EntitySet Name="Categories" EntityType="ShoppingCartModel.Store.Categories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Memberships" EntityType="ShoppingCartModel.Store.Memberships" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MyProfiles" EntityType="ShoppingCartModel.Store.MyProfiles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Orders" EntityType="ShoppingCartModel.Store.Orders" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Products" EntityType="ShoppingCartModel.Store.Products" store:Type="Tables" Schema="dbo" />
@@ -27,6 +28,10 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
+          <AssociationSet Name="MembershipEntity_User" Association="ShoppingCartModel.Store.MembershipEntity_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Memberships" EntitySet="Memberships" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Categories">
           <Key>
@@ -35,6 +40,30 @@
           <Property Name="CategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CategoryName" Type="nvarchar(max)" />
           <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Memberships">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="PasswordFormat" Type="int" Nullable="false" />
+          <Property Name="PasswordSalt" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="PasswordQuestion" Type="nvarchar" MaxLength="256" />
+          <Property Name="PasswordAnswer" Type="nvarchar" MaxLength="128" />
+          <Property Name="IsApproved" Type="bit" Nullable="false" />
+          <Property Name="IsLockedOut" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="LastLoginDate" Type="datetime" Nullable="false" />
+          <Property Name="LastPasswordChangedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastLockoutDate" Type="datetime" Nullable="false" />
+          <Property Name="FailedPasswordAttemptCount" Type="int" Nullable="false" />
+          <Property Name="FailedPasswordAttemptWindowStart" Type="datetime" Nullable="false" />
+          <Property Name="FailedPasswordAnswerAttemptCount" Type="int" Nullable="false" />
+          <Property Name="FailedPasswordAnswerAttemptWindowsStart" Type="datetime" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="MyProfiles">
           <Key>
@@ -58,7 +87,7 @@
           <Property Name="OrderID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
-          <Property Name="CreatedTime" Type="datetime" />
+          <Property Name="CreatedTime" Type="datetime" Nullable="false" />
           <Property Name="Shipped" Type="bit" Nullable="false" />
           <Property Name="TrackingNumber" Type="nvarchar(max)" />
         </EntityType>
@@ -132,6 +161,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="MembershipEntity_User">
+          <End Role="Users" Type="ShoppingCartModel.Store.Users" Multiplicity="1" />
+          <End Role="Memberships" Type="ShoppingCartModel.Store.Memberships" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Memberships">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -162,6 +203,11 @@
             <End Role="User" EntitySet="Users" />
             <End Role="MyProfile" EntitySet="MyProfiles" />
           </AssociationSet>
+          <EntitySet Name="Memberships" EntityType="ShoppingCartModel.Membership" />
+          <AssociationSet Name="MembershipEntity_User" Association="ShoppingCartModel.MembershipEntity_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Membership" EntitySet="Memberships" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Category">
           <Key>
@@ -180,7 +226,7 @@
           <Property Name="UserID" Type="Guid" Nullable="false" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="ShoppingCartModel.FK_Orders_Products" FromRole="Orders" ToRole="Products" />
-          <Property Type="DateTime" Name="CreatedTime" Precision="3" />
+          <Property Type="DateTime" Name="CreatedTime" Precision="3" Nullable="false" />
           <Property Type="Boolean" Name="Shipped" Nullable="false" />
           <Property Type="String" Name="TrackingNumber" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="User" Relationship="ShoppingCartModel.FK_Orders_Users" FromRole="Order" ToRole="User" />
@@ -236,6 +282,7 @@
           <NavigationProperty Name="Orders" Relationship="ShoppingCartModel.FK_Orders_Users" FromRole="User" ToRole="Order" />
           <NavigationProperty Name="Products" Relationship="ShoppingCartModel.FK_Products_Users" FromRole="User" ToRole="Product" />
           <NavigationProperty Name="MyProfile" Relationship="ShoppingCartModel.FK_MyProfiles_Users" FromRole="User" ToRole="MyProfile" />
+          <NavigationProperty Name="Membership" Relationship="ShoppingCartModel.MembershipEntity_User" FromRole="User" ToRole="Membership" />
         </EntityType>
         <Association Name="FK_Orders_Users">
           <End Type="ShoppingCartModel.User" Role="User" Multiplicity="1" />
@@ -286,6 +333,43 @@
             </Principal>
             <Dependent Role="MyProfile">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Type="Guid" Name="UserId" Nullable="false" />
+          <Property Type="Guid" Name="ApplicationId" Nullable="false" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="PasswordFormat" Nullable="false" />
+          <Property Type="String" Name="PasswordSalt" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PasswordQuestion" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PasswordAnswer" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsApproved" Nullable="false" />
+          <Property Type="Boolean" Name="IsLockedOut" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="LastLoginDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="LastPasswordChangedDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="LastLockoutDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="FailedPasswordAttemptCount" Nullable="false" />
+          <Property Type="DateTime" Name="FailedPasswordAttemptWindowStart" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="FailedPasswordAnswerAttemptCount" Nullable="false" />
+          <Property Type="DateTime" Name="FailedPasswordAnswerAttemptWindowsStart" Nullable="false" Precision="3" />
+          <Property Type="String" Name="Comment" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="ShoppingCartModel.MembershipEntity_User" FromRole="Membership" ToRole="User" />
+        </EntityType>
+        <Association Name="MembershipEntity_User">
+          <End Type="ShoppingCartModel.User" Role="User" Multiplicity="1" />
+          <End Type="ShoppingCartModel.Membership" Role="Membership" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Membership">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -353,6 +437,31 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Memberships">
+            <EntityTypeMapping TypeName="ShoppingCartModel.Membership">
+              <MappingFragment StoreEntitySet="Memberships">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="FailedPasswordAnswerAttemptWindowsStart" ColumnName="FailedPasswordAnswerAttemptWindowsStart" />
+                <ScalarProperty Name="FailedPasswordAnswerAttemptCount" ColumnName="FailedPasswordAnswerAttemptCount" />
+                <ScalarProperty Name="FailedPasswordAttemptWindowStart" ColumnName="FailedPasswordAttemptWindowStart" />
+                <ScalarProperty Name="FailedPasswordAttemptCount" ColumnName="FailedPasswordAttemptCount" />
+                <ScalarProperty Name="LastLockoutDate" ColumnName="LastLockoutDate" />
+                <ScalarProperty Name="LastPasswordChangedDate" ColumnName="LastPasswordChangedDate" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsLockedOut" ColumnName="IsLockedOut" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
+                <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="PasswordFormat" ColumnName="PasswordFormat" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

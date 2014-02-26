@@ -105,6 +105,7 @@
     <Content Include="Account\SellAnItem.aspx" />
     <Content Include="Account\SellHistory.aspx" />
     <Content Include="Account\SellOrders.aspx" />
+    <Content Include="App_Data\NewOrder.txt" />
     <Content Include="App_Data\ShoppingCart.mdf" />
     <Content Include="App_Data\ShoppingCart_log.ldf">
       <DependentUpon>ShoppingCart.mdf</DependentUpon>

@@ -13,6 +13,8 @@
         <EntityTypeShape EntityType="ShoppingCartModel.User" Width="1.5" PointX="4.125" PointY="4.375" />
         <AssociationConnector Association="ShoppingCartModel.FK_Orders_Users" />
         <AssociationConnector Association="ShoppingCartModel.FK_Products_Users" />
+        <EntityTypeShape EntityType="ShoppingCartModel.Membership" Width="1.5" PointX="1.125" PointY="4.125" />
+        <AssociationConnector Association="ShoppingCartModel.MembershipEntity_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -16,7 +16,7 @@ namespace Shopping_Cart.Account
         {
             if (!IsPostBack)
             {
-                ProductEntityDataSource.WhereParameters.Add("SellerID", DbType.Guid, Membership.GetUser().ProviderUserKey.ToString());
+                ProductEntityDataSource.WhereParameters.Add("SellerID", DbType.Guid, System.Web.Security.Membership.GetUser().ProviderUserKey.ToString());
             }
             ProductEntityDataSource.Where = "it.SellerID=@SellerID";
         }
